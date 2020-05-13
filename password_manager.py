@@ -5,7 +5,10 @@ from tkinter import messagebox
 
 no_password = "ysahjvsdvhdvsadbvh" # Random Verification Code
 
+root = Tk()
+
 # Define Background Image
+
 
 def createImage():
     background_image = PhotoImage(file = "") # Image Path Here
@@ -15,14 +18,39 @@ def createImage():
 
 def mainFunc ():
     # Main Window
+    root.destroy()
     root2 = Tk()
+    canvas2 = Canvas (root2, height = 600, width = 600)
+    canvas2.pack()
+
     root2.mainloop()
 
 def askForPassword ():
     # Ask for password window
+    root.destroy()
     root3 = Tk()
-    canvas2 = Canvas (root3, height = 300, width = 300)
-    canvas2.pack()
+    canvas3 = Canvas (root3, height = 400, width = 450)
+    canvas3.pack()
+
+    # Main Frame And Label
+    frame = Frame(root3, bg = '#80c1ff', bd = 10)
+    frame.place(relwidth = 0.75, relheight = 0.2, relx = 0.5, rely = 0.1, anchor = 'n')
+
+    label = Label(frame, text = "Please Enter Master\nPassword To Continue", font = ('Courier', 18))
+    label.place(relwidth = 1, relheight = 1)
+
+    # Password Frame and Label
+    frame2 = Frame(root3, bg = '#80c1ff', bd = 10)
+    frame2.place(relwidth = 0.75, relheight = 0.35, relx = 0.5, rely = 0.5, anchor = 'n')
+
+    # Submit Button
+    button = Button(frame2, text = "Submit", font = ("Courier", 18))
+    button.place(relheight = 0.3, relwidth = 0.6, rely = 0.6, relx = 0.2)
+
+    entry = Entry(frame2, font = ('Courier', 18))
+    entry.place(relwidth = 1, relheight = 0.4)
+    entry.config(show = "*")
+
 
     root3.mainloop()
 
@@ -32,16 +60,16 @@ def submitPasscode(passcode):
         messagebox.showerror("Notice", "For security reasons, make sure your password is at least 8 characters long!")
     else:
         # Try to write to the local file
-        open("secret.txt", 'w').close()
+        open("/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt", 'w').close()
 
-        with open("secret.txt", 'w') as passFile:
+        with open("/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt", 'w') as passFile:
             passFile.write(passcode)
         root.destroy()
         mainFunc ()
           
 def isLoggedIn ():
     # Main root object
-    root = Tk()
+    
 
     # Define the canvas
     canvas = Canvas(root, height = 500, width = 600)
@@ -69,15 +97,19 @@ def isLoggedIn ():
     label = Label(frame, text = "Welcome To The Password Manager", font = ('Courier', 18))
     label.place(relwidth = 1, relheight = 1)
 
+    createImage()
+
     # Define Submit Button
     button = Button(lower_frame, text = "Submit", font = ("Courier", 18), command = lambda: submitPasscode(entry.get()))
     button.place (relheight = 0.12, relwidth = 0.5, rely = 0.7, relx = 0.26)
 
+    
+
     root.mainloop()
 
-    createImage()
+    
 
-with open("secret.txt", 'r') as passFile:
+with open("/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt", 'r') as passFile:
     password = passFile.readline()
 
     if password == no_password:
