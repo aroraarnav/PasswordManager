@@ -3,10 +3,14 @@
 from tkinter import *
 from tkinter import messagebox
 
+didComeFirstTime = True
 secret_file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt"
 no_password = "ysahjvsdvhdvsadbvh" # Random Verification Code
 
-root = Tk()
+# Initialising only the main View
+root = Tk() 
+root2 = None
+root3 = None
 
 # Define Background Image
 
@@ -19,7 +23,10 @@ def createImage():
 
 def mainFunc ():
     # Main Window
-    root.destroy()
+    if didComeFirstTime == False:
+        root3.destroy()
+
+    global root2 
     root2 = Tk()
     canvas2 = Canvas (root2, height = 600, width = 600)
     canvas2.pack()
@@ -29,6 +36,7 @@ def mainFunc ():
 def askForPassword ():
     # Ask for password window
     root.destroy()
+    global root3
     root3 = Tk()
     canvas3 = Canvas (root3, height = 400, width = 450)
     canvas3.pack()
@@ -37,7 +45,7 @@ def askForPassword ():
     frame = Frame(root3, bg = '#80c1ff', bd = 10)
     frame.place(relwidth = 0.75, relheight = 0.2, relx = 0.5, rely = 0.1, anchor = 'n')
 
-    label = Label(frame, text = "Please Enter Master\nPassword To Continue", font = ('Courier', 18))
+    label = Label(frame, text = "Please Enter Master\nPassword To Login & Proceed.", font = ('Courier', 18))
     label.place(relwidth = 1, relheight = 1)
 
     # Password Frame and Label
@@ -59,7 +67,7 @@ def askForPassword ():
                 if passcode != enteredPasscode:
                     messagebox.showerror("Notice", "Your passcode is incorrect, please try again.")
                 else:
-                    print ("This worked")
+                    mainFunc()
 
 
 
@@ -108,8 +116,6 @@ def isLoggedIn ():
     label = Label(frame, text = "Welcome To The Password Manager", font = ('Courier', 18))
     label.place(relwidth = 1, relheight = 1)
 
-    createImage()
-
     # Define Submit Button
     button = Button(lower_frame, text = "Submit", font = ("Courier", 18), command = lambda: submitPasscode(entry.get()))
     button.place (relheight = 0.12, relwidth = 0.5, rely = 0.7, relx = 0.26)
@@ -126,4 +132,5 @@ with open(secret_file, 'r') as passFile:
     if password == no_password:
         isLoggedIn()
     else:
+        didComeFirstTime = False
         askForPassword()
