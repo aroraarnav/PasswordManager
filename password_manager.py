@@ -3,6 +3,7 @@
 from tkinter import *
 from tkinter import messagebox
 
+secret_file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt"
 no_password = "ysahjvsdvhdvsadbvh" # Random Verification Code
 
 root = Tk()
@@ -44,12 +45,22 @@ def askForPassword ():
     frame2.place(relwidth = 0.75, relheight = 0.35, relx = 0.5, rely = 0.5, anchor = 'n')
 
     # Submit Button
-    button = Button(frame2, text = "Submit", font = ("Courier", 18))
+    button = Button(frame2, text = "Submit", font = ("Courier", 18), command = lambda: checkPass(entry.get()))
     button.place(relheight = 0.3, relwidth = 0.6, rely = 0.6, relx = 0.2)
 
     entry = Entry(frame2, font = ('Courier', 18))
     entry.place(relwidth = 1, relheight = 0.4)
     entry.config(show = "*")
+
+    def checkPass (enteredPasscode):
+            with open (secret_file, 'r') as passfile:
+                passcode = passfile.readline()  
+
+                if passcode != enteredPasscode:
+                    messagebox.showerror("Notice", "Your passcode is incorrect, please try again.")
+                else:
+                    print ("This worked")
+
 
 
     root3.mainloop()
@@ -60,9 +71,9 @@ def submitPasscode(passcode):
         messagebox.showerror("Notice", "For security reasons, make sure your password is at least 8 characters long!")
     else:
         # Try to write to the local file
-        open("/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt", 'w').close()
+        open(secret_file, 'w').close()
 
-        with open("/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt", 'w') as passFile:
+        with open(secret_file, 'w') as passFile:
             passFile.write(passcode)
         root.destroy()
         mainFunc ()
@@ -109,7 +120,7 @@ def isLoggedIn ():
 
     
 
-with open("/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt", 'r') as passFile:
+with open(secret_file, 'r') as passFile:
     password = passFile.readline()
 
     if password == no_password:
