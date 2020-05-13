@@ -1,4 +1,66 @@
 #PASSWORD MANAGER APPLICATION BY ARNAV ARORA
 
+from tkinter import *
+from tkinter import messagebox
+
+# Main root object
+root = Tk()
+
+# Define the canvas
+canvas = Canvas(root, height = 500, width = 600)
+canvas.pack()
+
+# Define Background Image
+
+background_image = PhotoImage(file = "") # Image Path Here
+background_label = Label(root, image = background_image)
+background_label.place (relwidth = 1, relheight = 1)
+
+# Main Frame and Main Label
+frame = Frame(root, bg = '#80c1ff', bd = 10)
+frame.place(relwidth = 0.75, relheight = 0.1, relx = 0.5, rely = 0.1, anchor = 'n')
+
+label = Label(frame, text = "Welcome To The Password Manager", font = ('Courier', 18))
+label.place(relwidth = 1, relheight = 1)
+
+def submitPasscode(passcode):
+    # Perform password security checks
+    if len(passcode) =< 8:
+        messagebox.showerror("Notice", "For security reasons, make sure your password is at least 8 characters long!")
+    else:
+        # Try to write to the local file
+
+        
+
+def isLoggedIn ():
+    lower_frame = Frame(root, bg = '#80c1ff', bd = 10)
+    lower_frame.place(relx = 0.5, rely = 0.25, relwidth = 0.75, relheight = 0.6, anchor = "n")
+
+    # Define Credit Label
+    creditLabel = Label(lower_frame, text = "By Arnav Arora", font = ('Courier', 18), bg = '#80c1ff', fg = 'white')
+    creditLabel.place(relx = 0.8, rely = 0.95, anchor = "n", relwidth = 1.35)
+
+    pleaseLabel = Label(lower_frame, text = "Please create a master\npassword below:", bg = '#80c1ff', font = ('Courier', 22), anchor = 'nw', justify = 'left', bd = 5)
+    pleaseLabel.place (relwidth = 1, relheight = 0.2)
+
+    # Define Text Entry
+    entry = Entry(lower_frame, font = ("Courier" , 18))
+    entry.place(relheight = 0.15, relwidth = 0.8, rely = 0.4, relx = 0.11)
+    entry.config(show = "*")
+
+    # Define Submit Button
+    button = Button(lower_frame, text = "Submit", font = ("Courier", 18), command = lambda: submitPasscode(entry.get()))
+    button.place (relheight = 0.12, relwidth = 0.5, rely = 0.7, relx = 0.26)
 
 
+
+
+with open("secret.txt", 'r') as passFile:
+    password = passFile.readline()
+
+    if password == "no_password":
+        isLoggedIn()
+    else:
+        pass
+
+root.mainloop()
