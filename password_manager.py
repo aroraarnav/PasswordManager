@@ -1,35 +1,77 @@
-#PASSWORD MANAGER APPLICATION BY ARNAV ARORA
+# PASSWORD MANAGER APPLICATION BY ARNAV ARORA
 
 from tkinter import *
 from tkinter import messagebox
 
-didComeFirstTime = True
-secret_file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt"
+didComeFirstTime = True 
+password_file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/passwords.txt"
+secret_file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt" # Secret file path here
 no_password = "ysahjvsdvhdvsadbvh" # Random Verification Code
+
+# Define Background Image
+def createImage(currentRoot):
+    background_image = PhotoImage(file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/landscape.png") # Image Path Here
+    background_label = Label(currentRoot, image = background_image)
+    background_label.place (relwidth = 1, relheight = 1)
+
+    background_label.image = background_image
 
 # Initialising only the main View
 root = Tk() 
+root.title("Create A Master Password")
 root2 = None
 root3 = None
 
-# Define Background Image
-
-
-def createImage():
-    background_image = PhotoImage(file = "") # Image Path Here
-    background_label = Label(root, image = background_image)
-    background_label.place (relwidth = 1, relheight = 1)
-
-
 def mainFunc ():
+
+    def retrievePasswords ():
+        with open (password_file, 'r') as passFile:
+            if passFile.readlines() == [] or passFile.readlines() == [""]:
+                messagebox.showerror('Notice', "You haven't saved any passwords yet. Save some passwords to view them.")
+            else:
+                print (passFile.readline())
+
     # Main Window
     if didComeFirstTime == False:
         root3.destroy()
 
     global root2 
     root2 = Tk()
-    canvas2 = Canvas (root2, height = 600, width = 600)
+    root2.title("Welcome to Password Manager")
+    canvas2 = Canvas (root2, height = 500, width = 500)
     canvas2.pack()
+
+    # Design for Main Screen
+
+    frame = Frame(root2, bg = '#80c1ff', bd = 10)
+    frame.place(relwidth = 0.75, relheight = 0.2, relx = 0.5, rely = 0.1, anchor = 'n')
+
+    label = Label(frame, text = "Welcome To The Password Manager!", font = ('Courier', 18))
+    label.place(relwidth = 1, relheight = 1)
+
+    lower_frame = Frame(root2, bg = '#80c1ff', bd = 10)
+    lower_frame.place(relx = 0.5, rely = 0.35, relwidth = 0.75, relheight = 0.6, anchor = "n")
+
+    creditLabel = Label(lower_frame, text = "By Arnav Arora", font = ('Courier', 18), bg = '#80c1ff')
+    creditLabel.place(relx = 0.8, rely = 0.95, anchor = "n", relwidth = 1.35)
+
+    serviceLabel = Label(lower_frame, text = "Name of Service:", font = ("Courier", 18), bg = '#80c1ff')
+    serviceLabel.place(rely = 0.05, relwidth = 1)
+
+    serviceEntry = Entry(lower_frame, font = ('Courier', 16))
+    serviceEntry.place(rely = 0.15, relwidth = 0.7, relx = 0.15, relheight = 0.12)
+
+    passLabel = Label(lower_frame, text = "Password:", font = ("Courier", 18), bg = '#80c1ff')
+    passLabel.place(rely = 0.32, relwidth = 1)
+
+    passEntry = Entry(lower_frame, font = ('Courier', 16))
+    passEntry.place(rely = 0.42, relwidth = 0.7, relx = 0.15, relheight = 0.12)
+
+    addButton = Button(lower_frame, font = ("Courier", 16), text = "Add Password")
+    addButton.place(rely = 0.6, relwidth = 0.7, relx = 0.15, relheight = 0.1)
+
+    retrieveButton = Button(lower_frame, font = ("Courier", 16), text = "Retrieve Passwords", command = lambda: retrievePasswords())
+    retrieveButton.place(rely = 0.75, relwidth = 0.7, relx = 0.15, relheight = 0.1)
 
     root2.mainloop()
 
@@ -38,6 +80,7 @@ def askForPassword ():
     root.destroy()
     global root3
     root3 = Tk()
+    root3.title("Log In With Master Password")
     canvas3 = Canvas (root3, height = 400, width = 450)
     canvas3.pack()
 
@@ -69,8 +112,6 @@ def askForPassword ():
                 else:
                     mainFunc()
 
-
-
     root3.mainloop()
 
 def submitPasscode(passcode):
@@ -88,8 +129,6 @@ def submitPasscode(passcode):
           
 def isLoggedIn ():
     # Main root object
-    
-
     # Define the canvas
     canvas = Canvas(root, height = 500, width = 600)
     canvas.pack()   
@@ -120,11 +159,7 @@ def isLoggedIn ():
     button = Button(lower_frame, text = "Submit", font = ("Courier", 18), command = lambda: submitPasscode(entry.get()))
     button.place (relheight = 0.12, relwidth = 0.5, rely = 0.7, relx = 0.26)
 
-    
-
     root.mainloop()
-
-    
 
 with open(secret_file, 'r') as passFile:
     password = passFile.readline()
