@@ -4,17 +4,9 @@ from tkinter import *
 from tkinter import messagebox
 
 didComeFirstTime = True 
-password_file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/passwords.txt"
+password_file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/passwords.txt" # Passwords file Path Here
 secret_file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt" # Secret file path here
 no_password = "ysahjvsdvhdvsadbvh" # Random Verification Code
-
-# Define Background Image
-def createImage(currentRoot):
-    background_image = PhotoImage(file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/landscape.png") # Image Path Here
-    background_label = Label(currentRoot, image = background_image)
-    background_label.place (relwidth = 1, relheight = 1)
-
-    background_label.image = background_image
 
 # Initialising only the main View
 root = Tk() 
@@ -24,12 +16,24 @@ root3 = None
 
 def mainFunc ():
 
+    def setPasswords (service, password):
+        if service.strip() == "" or password.strip() == "":
+            messagebox.showerror("Notice", "Please fill in all fields and try again.")
+        else:
+            with open (password_file, 'a') as passFile:
+                passFile.write("\nYour password for " + "'" + service + "'" + " is " + "'" + password + "'")
+        
+        messagebox.showinfo("Success!", "Your password has been added and saved! You can now retrieve it whenever you want.")
+
+
     def retrievePasswords ():
         with open (password_file, 'r') as passFile:
-            if passFile.readlines() == [] or passFile.readlines() == [""]:
+
+            passwords = passFile.readlines()
+            if passwords == [] or passwords == [""]:
                 messagebox.showerror('Notice', "You haven't saved any passwords yet. Save some passwords to view them.")
             else:
-                print (passFile.readline())
+                messagebox.showinfo("Your Passwords", "\n".join(passwords))
 
     # Main Window
     if didComeFirstTime == False:
@@ -67,7 +71,7 @@ def mainFunc ():
     passEntry = Entry(lower_frame, font = ('Courier', 16))
     passEntry.place(rely = 0.42, relwidth = 0.7, relx = 0.15, relheight = 0.12)
 
-    addButton = Button(lower_frame, font = ("Courier", 16), text = "Add Password")
+    addButton = Button(lower_frame, font = ("Courier", 16), text = "Add Password", command = lambda: setPasswords(serviceEntry.get(), passEntry.get()))
     addButton.place(rely = 0.6, relwidth = 0.7, relx = 0.15, relheight = 0.1)
 
     retrieveButton = Button(lower_frame, font = ("Courier", 16), text = "Retrieve Passwords", command = lambda: retrievePasswords())
