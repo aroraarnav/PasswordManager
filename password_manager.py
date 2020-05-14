@@ -1,4 +1,5 @@
 # PASSWORD MANAGER APPLICATION BY ARNAV ARORA
+# CUSTOMISABLE GUI, MADE WITH TKINTER
 
 from tkinter import *
 from tkinter import messagebox
@@ -6,7 +7,7 @@ from tkinter import messagebox
 didComeFirstTime = True 
 password_file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/passwords.txt" # Passwords file Path Here
 secret_file = "/Users/arnavarora/Desktop/Py Projects/Password Manager/PasswordManager/secret.txt" # Secret file path here
-no_password = "ysahjvsdvhdvsadbvh" # Random Verification Code
+no_password = "ysahjvsdvhdvsadbvh" # Random Verification Code, Make sure user won't enter this as passcode.
 
 # Initialising only the main View
 root = Tk() 
